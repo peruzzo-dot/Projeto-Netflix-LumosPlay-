@@ -1,0 +1,709 @@
+:root {
+    /* variáveis de tema: cores e tokens reutilizáveis */
+    --bg-1: #0b0b0b; /* tom muito escuro */
+    /* cor de fundo superior */
+    --bg-2: #1a0f0f; /* nuance marrom/bermuda para clima de castelo */
+    /* cor de fundo inferior */
+    --card: #7a0909; /* maroon hogwarts */
+    /* cor de destaque (principal) */
+    --gold: #d4af37; /* dourado para detalhes */
+    --text: #f3efef; /* cor principal do texto */
+    /* cor para texto */
+    --muted: #e6dcc7; /* tom creme para textos secundários */
+    /* cor para textos secundários */
+    --focus-ring: rgba(212,175,55,0.12); /* anel dourado suave */
+    /* cor usada para anel de foco */
+}
+
+/* Reset básico: faz com que o box-sizing seja consistente */
+* {
+    box-sizing: border-box
+}
+
+/* inclui padding/border dentro da largura/altura */
+html,
+body {
+    height: 100%
+}
+
+/* garante que 100% de altura funcione corretamente */
+
+body {
+    margin: 0;
+    /* remove margens padrão do navegador */
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    /* fonte padrão da página */
+    background: linear-gradient(180deg, var(--bg-1), var(--bg-2));
+    /* gradiente de fundo */
+    color: var(--text);
+    /* cor do texto principal */
+    -webkit-font-smoothing: antialiased;
+    /* suaviza fontes em WebKit */
+    -moz-osx-font-smoothing: grayscale;
+    /* suaviza fontes no macOS */
+    display: flex;
+    /* layout flex para centralizar conteúdo verticalmente se necessário */
+    flex-direction: column;
+    /* empilha elementos na vertical */
+    align-items: center;
+    /* centraliza conteúdo horizontalmente */
+    transition: background .28s ease, color .28s ease; /* transição suave entre temas */
+}
+
+main {
+    width: 100%;
+    /* ocupa a largura disponível */
+    max-width: 1100px;
+    /* limita a largura máxima para legibilidade */
+    padding: 48px 24px 24px;
+    /* espaçamento interno (topo, laterais, base) */
+    display: flex;
+    /* usa flex para organizar conteúdo interno */
+    flex-direction: column;
+    /* empilha elementos verticalmente */
+    align-items: center;
+    /* centraliza itens horizontalmente */
+}
+
+/* Hero / logotipo textual na entrada */
+.hero{
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:10px;
+    padding:48px 12px 8px; /* espaço acima do bloco de perfis */
+}
+
+.logo-text{
+    font-family: 'Anton', 'Helvetica Neue', Arial, sans-serif; /* fonte forte estilo display */
+    color: var(--card); /* cor vermelha similar ao destaque */
+    font-size: clamp(2.4rem, 8vw, 5rem); /* responsivo */
+    letter-spacing: -2px; /* reduz espaçamento para efeito de logotipo */
+    line-height:1;
+    text-transform: none;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.6);
+}
+
+.tagline{
+    margin:0;
+    color:var(--muted);
+    font-size:clamp(0.95rem,2.4vw,1.2rem);
+    opacity:0.95;
+}
+
+.who-title{
+    margin-top:26px;
+    font-size:1.25rem;
+    color:var(--text);
+}
+
+h1 {
+    margin: 0;
+    /* remove margem padrão */
+    font-weight: 700;
+    /* peso da fonte mais grosso */
+    font-size: clamp(1.5rem, 3.5vw, 2.6rem);
+    /* tamanho responsivo entre limites */
+    letter-spacing: -0.02em;
+    /* pequeno ajuste de espaçamento entre letras */
+    text-align: center;
+    /* alinha o título ao centro */
+    color: var(--text);
+    /* cor do título */
+}
+
+/* Subtle red underline to evoke brand */
+h1::after {
+    content: "";
+    /* cria um elemento decorativo depois do h1 */
+    display: block;
+    /* faz a pseudo-elem ocupar linha separada */
+    width: 72px;
+    /* largura da barra vermelha */
+    height: 6px;
+    /* altura da barra vermelha */
+    background: var(--card);
+    /* usa a cor de destaque definida */
+    margin: 12px auto 0;
+    /* espaçamento e centralização horizontal */
+    border-radius: 4px;
+    /* cantos arredondados da barra */
+    opacity: 0.95;
+    /* ligeira transparência */
+}
+
+/* Contêiner dos perfis */
+.profiles {
+    width: 100%;
+    /* ocupa toda a largura do pai */
+    margin-top: 28px;
+    /* separação do título */
+    display: flex;
+    /* coloca os perfis lado a lado */
+    flex-wrap: wrap;
+    /* permite quebra em múltiplas linhas */
+    justify-content: center;
+    /* centraliza os itens horizontalmente */
+    gap: clamp(12px, 3vw, 28px);
+    /* espaçamento responsivo entre itens */
+    align-items: flex-start;
+    /* alinha itens no topo da linha */
+}
+
+.profiles__item {
+    display: flex;
+    /* usado para centrar conteúdo interno se necessário */
+    justify-content: center;
+    /* centra horizontalmente o conteúdo do item */
+}
+
+/* Estilo base para cada perfil (link ou botão) */
+.profile {
+    display: inline-block;
+    /* trata o perfil como bloco inline (para larguras) */
+    width: 100%;
+    /* permite que o elemento cresça até o limite do pai */
+    max-width: 220px;
+    /* limite máximo de largura para cada card */
+    background: transparent;
+    /* sem fundo por padrão */
+    border-radius: 10px;
+    /* cantos arredondados para suavizar o card */
+    text-align: center;
+    /* centraliza o texto dentro do card */
+    color: inherit;
+    /* herda a cor do texto do elemento pai */
+    text-decoration: none;
+    /* remove sublinhado de links */
+    transition: transform .18s cubic-bezier(.2, .9, .3, 1), box-shadow .18s;
+    /* anima transformações e sombras */
+    -webkit-tap-highlight-color: transparent;
+    /* remove highlight em dispositivos touch */
+    flex: 0 0 160px;
+    /* flex-basis: largura base fixa para layout lado a lado */
+}
+
+.profile figure {
+    margin: 0
+}
+
+/* remove margem padrão do figure */
+
+/* Imagem do perfil: forçada a proporção quadrada */
+.profile img {
+    width: 100%;
+    /* ocupa a largura do elemento pai */
+    aspect-ratio: 1/1;
+    /* força proporção 1:1 (quadrado) */
+    object-fit: cover;
+    /* cobre a área cortando partes externas, preservando proporção */
+    display: block;
+    /* remove espaço em linhas abaixo da imagem */
+    border-radius: 8px;
+    /* cantos arredondados da imagem */
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.6);
+    /* sombra para dar profundidade */
+    transition: transform .22s ease, box-shadow .22s ease;
+    /* anima transformações e sombra */
+}
+
+.profile figcaption {
+    margin-top: 12px;
+    /* espaçamento entre imagem e legenda */
+    font-size: 0.95rem;
+    /* tamanho do texto da legenda */
+    color: var(--muted);
+    /* cor menos proeminente para a legenda */
+}
+
+/* Estado hover/focus: eleva e destaca a imagem */
+.profile:hover img,
+.profile:focus img {
+    transform: translateY(-6px) scale(1.03);
+    /* levanta e amplia levemente a imagem */
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.65), 0 0 0 6px var(--focus-ring);
+    /* sombra mais forte + anel sutil */
+}
+
+/* Accessible focus ring: remove outline padrão e usa box-shadow no focus-visible */
+.profile:focus {
+    outline: none;
+    /* remove outline padrão do navegador */
+}
+
+.profile:focus-visible {
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.65), 0 0 0 6px var(--focus-ring);
+    /* anel visível para navegação por teclado */
+    border-radius: 12px;
+    /* garante os cantos arredondados no estado de foco */
+}
+
+/* Ajustes para telas pequenas */
+@media (max-width:420px) {
+
+    /* Em telas pequenas, reduz a largura dos cards e permite 2 por linha */
+    .profile {
+        max-width: 160px;
+        flex: 0 0 45%;
+    }
+
+    /* reduz o card e permite 2 por linha */
+}
+
+/* Breakpoints para diferentes tipos de devices: mobile, tablet, desktop e widescreen */
+
+/* Mobile médio: entre telefones pequenos e tablets (≈421px - 767px) */
+@media (min-width:421px) and (max-width:767px) {
+
+    /* Ajusta padding para telas um pouco maiores */
+    main {
+        padding: 40px 20px 20px;
+    }
+
+    /* reduz um pouco o padding lateral */
+    /* Aproximadamente 3 cards por linha (dependendo do gap) */
+    .profile {
+        flex: 0 0 30%;
+        max-width: 170px;
+    }
+
+    /* flex-basis cerca de 30% */
+    h1 {
+        font-size: clamp(1.6rem, 3.1vw, 2.2rem);
+    }
+
+    /* tamanho do título levemente ajustado */
+}
+
+/* Tablet: dispositivos médios (≈768px - 899px) */
+@media (min-width:768px) and (max-width:899px) {
+    main {
+        padding: 44px 24px 24px;
+    }
+
+    /* padding confortável para tablets */
+    .profile {
+        flex: 0 0 150px;
+        max-width: 180px;
+    }
+
+    /* 4 por linha aproximado */
+    h1 {
+        font-size: clamp(1.8rem, 2.8vw, 2.4rem);
+    }
+
+    /* título um pouco maior */
+}
+
+/* Desktop padrão: a partir de 900px — layout de colunas mais amplas */
+@media (min-width:900px) {
+    .profile {
+        flex: 0 0 180px;
+        max-width: 200px;
+    }
+
+    /* em desktops, cards maiores */
+    main {
+        max-width: 1300px;
+    }
+
+    /* permite conteúdo mais largo em desktop */
+    h1 {
+        font-size: clamp(2rem, 2.2vw, 2.8rem);
+    }
+
+    /* aumenta título em telas maiores */
+}
+
+/* Widescreen / telas muito grandes: 1440px+ */
+@media (min-width:1440px) {
+    .profile {
+        flex: 0 0 200px;
+        max-width: 220px;
+    }
+
+    /* cards ainda maiores em telas largas */
+    main {
+        max-width: 1400px;
+        padding: 64px 32px 32px;
+    }
+
+    /* mais espaço ao redor */
+    h1 {
+        font-size: clamp(2.4rem, 1.8vw, 3.4rem);
+    }
+
+    /* título mais impactante */
+}
+
+footer {
+    margin: 32px 0 56px;
+    /* espaçamento do rodapé (topo, laterais, base) */
+    color: var(--muted);
+    /* cor mais suave para texto do rodapé */
+    font-size: 0.85rem;
+    /* tamanho do texto do rodapé */
+}
+
+/* Respeita preferências de movimento reduzido do usuário */
+@media (prefers-reduced-motion: reduce) {
+
+    .profile,
+    .profile img {
+        transition: none
+    }
+
+    /* desliga transições para usuários que preferem menos movimento */
+
+    /* Também pausamos a cena de Quadribol (movimento intenso) */
+    .clouds, .snitch, .bludger, .broom, .hoop, .stadium { animation: none !important; transition: none !important; }
+    /* Também removemos o vídeo de fundo para usuários que preferem menos movimento */
+    #video-bg iframe, #video-bg video { display: none !important }
+}
+
+/* Helper: esconde visualmente conteúdo, mas mantém acessível para leitores de tela */
+.visually-hidden {
+    position: absolute !important;
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+    clip: rect(1px, 1px, 1px, 1px);
+    white-space: nowrap
+}
+
+/* Estilos para o header e botão de alternância de tema */
+#theme-toggle:focus{outline:none}
+#theme-toggle:focus-visible{
+    box-shadow: 0 6px 18px rgba(0,0,0,0.6), 0 0 0 6px var(--focus-ring); /* foco acessível */
+}
+
+/* Header com logotipo e navegação */
+.site-header{
+    width:100%;
+    background:transparent; /* transparente para combinar com hero escuro */
+    position:fixed; /* fixado no topo como na Netflix */
+    top:0;left:0;right:0;
+    padding:12px 24px; /* espaçamento do header */
+    z-index: 50; /* sobre o conteúdo */
+}
+.site-header__inner{
+    max-width:1400px;
+    margin:0 auto;
+    display:flex;
+    align-items:center;
+    justify-content:space-between; /* marca à esquerda, controles à direita */
+    gap:12px;
+}
+.site-brand{
+    display:flex;
+    align-items:center;
+    gap:20px;
+}
+/* push main content down so it doesn't hide under fixed header */
+main { padding-top: 96px; }
+
+/* Small brand link styling */
+.brand-link{display:inline-block;text-decoration:none;color:inherit}
+.site-brand .logo-text{font-size:1.15rem;letter-spacing:-1px}
+
+/* Controls on the right: icons and small avatar */
+.site-controls{display:flex;align-items:center;gap:12px}
+.icon-button{background:transparent;border:0;color:var(--text);font-size:1.05rem;cursor:pointer;padding:8px;border-radius:6px}
+.icon-button:hover{background:rgba(255,255,255,0.04)}
+.kids-link{color:var(--text);text-decoration:none;font-weight:600;padding:6px 8px;border-radius:6px}
+.kids-link:hover{background:rgba(255,255,255,0.03)}
+.profile-mini img{width:36px;height:36px;object-fit:cover;border-radius:6px;box-shadow:0 6px 14px rgba(0,0,0,0.35)}
+
+/* hide the main nav on small screens and keep header compact */
+@media (max-width:920px){
+    .main-nav .nav-links{display:none}
+}
+
+@media (max-width:420px){
+    .profile-mini img{width:30px;height:30px}
+    main { padding-top: 80px; }
+}
+.logo-text{
+    font-family: 'Anton', 'Helvetica Neue', Arial, sans-serif; /* logotipo */
+    color: var(--gold);
+    font-size:1.6rem;
+    letter-spacing:-1px;
+}
+/* Hero animated background (quidditch / snitch) */
+.hero-bg{position:absolute;inset:0;overflow:hidden;z-index:0}
+.hero{position:relative;overflow:hidden}
+.clouds{position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,0.02) 1px, transparent 1px);opacity:0.28;animation:cloudsMove 36s linear infinite}
+
+/* Stadium base: dark silhouette at bottom to suggest stands */
+.stadium{
+    position:absolute;
+    left:0;right:0;bottom:0;
+    height:34%;
+    background: linear-gradient(180deg, rgba(10,10,10,0.0) 0%, rgba(5,5,5,0.9) 60%),
+                linear-gradient(90deg, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.05) 50%, rgba(0,0,0,0.25) 100%);
+    background-size: cover;
+    filter: blur(6px);
+    transform: translateY(6%);
+    opacity:0.95;
+    z-index:0;
+}
+
+/* Goal hoops - simple ring look */
+.hoop{
+    position:absolute;
+    width:88px;
+    height:88px;
+    border-radius:50%;
+    border:4px solid rgba(212,175,55,0.9);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.6);
+    top:32%;
+    z-index:1;
+    opacity:0.9;
+}
+.hoop-left{left:6%;transform:translateY(-10%)}
+.hoop-right{right:6%;transform:translateY(-10%)}
+
+/* Flying elements */
+.snitch{position:absolute;width:18px;height:18px;background:var(--gold);border-radius:50%;box-shadow:0 0 8px rgba(212,175,55,0.95);top:62%;left:-8%;transform:translateY(-50%);animation:snitchFly 6s cubic-bezier(.35,.06,.12,1) infinite}
+
+/* Subtle rim/glint to make snitch look like it has wings */
+.snitch::before{content:'';position:absolute;left:-8px;top:50%;width:10px;height:2px;background:linear-gradient(90deg, rgba(255,255,255,0.95), rgba(255,255,255,0.0));transform:rotate(-18deg);border-radius:2px;opacity:0.9}
+
+/* Bludgers - heavier metal balls bouncing across field */
+.bludger{position:absolute;width:26px;height:26px;border-radius:50%;background:linear-gradient(180deg,#0f0f0f,#2b2b2b);box-shadow:0 8px 18px rgba(0,0,0,0.7);z-index:1;opacity:0.95}
+.bludger-1{left:-6%;top:70%;animation:bludgerFly1 7.2s cubic-bezier(.42,.03,.25,1) infinite}
+.bludger-2{left:-10%;top:55%;animation:bludgerFly2 8.6s cubic-bezier(.45,.02,.18,1) infinite}
+
+/* Broom rider streaks: long thin shapes with slight rotation */
+.broom{position:absolute;width:48px;height:6px;background:linear-gradient(90deg, rgba(255,255,255,0.06), rgba(212,175,55,0.18));border-radius:6px;box-shadow:0 6px 18px rgba(0,0,0,0.5);z-index:1;opacity:0.9}
+.broom-1{left:-20%;top:36%;transform:rotate(-6deg);animation:broomFly1 5.8s linear infinite}
+.broom-2{left:-30%;top:46%;transform:rotate(2deg);animation:broomFly2 6.6s linear infinite}
+
+.hero-content{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center}
+
+/* --- Disable previous Quidditch animation elements ---
+   Keep these rules as a simple way to remove the floating balls/vassouras/stadium
+   while keeping the iframe background active. Using !important stops residual animations.
+*/
+.stadium, .hoop, .snitch, .bludger, .broom, .clouds {
+    display: none !important;
+    animation: none !important;
+    transition: none !important;
+}
+
+
+/* Ensure profile cards and hero text sit above the video background */
+.hero-content, .profiles, .profiles__item, .profile {
+    position:relative;
+    z-index: 3; /* above the fixed video which uses a very low z-index */
+}
+
+/* Mobile fallback: when iframe is hidden, show a subtle static poster background */
+.hero-bg{background-size:cover;background-position:center}
+@media (max-width:720px){
+    .hero-bg{background-image:linear-gradient(180deg, rgba(0,0,0,0.45), rgba(0,0,0,0.55))}
+}
+
+/* Play button overlay shown when autoplay is blocked */
+#bg-play-btn{
+    position:fixed;
+    right:18px;
+    bottom:18px;
+    z-index:9999;
+    width:56px;height:56px;border-radius:50%;
+    background:var(--gold);color:#111;border:none;font-size:22px;cursor:pointer;
+    box-shadow:0 8px 24px rgba(0,0,0,0.45);
+    display:flex;align-items:center;justify-content:center;opacity:0.98
+}
+
+@media (prefers-reduced-motion: reduce){
+    #bg-play-btn{display:none}
+}
+
+/* Full-window background container (covers entire viewport) */
+#video-bg{
+    position:fixed; /* fixed so it covers the entire viewport */
+    inset:0; /* top/right/bottom/left = 0 */
+    z-index:-999; /* behind all content */
+    overflow:hidden;
+    pointer-events:none; /* allow interaction with foreground */
+}
+
+/* Support both iframe and native video elements as background
+   Use inset:0 + object-fit:cover so the media always fills viewport
+   without causing horizontal scrollbars or layout shifts. */
+#video-bg iframe, #video-bg video{
+    position:absolute;
+    inset:0; /* fill the container */
+    width:100%;
+    height:100%;
+    min-width:100%;
+    min-height:100%;
+    border:0;
+    object-fit:cover;
+    transform:none;
+    filter:grayscale(4%) contrast(.92) brightness(.78);
+}
+
+/* Darker overlay with subtle vignette to evoke castle/mystic mood and
+   ensure foreground text and profile cards remain legible. */
+#video-bg .overlay{
+    position:absolute;
+    inset:0;
+    background:
+        radial-gradient(ellipse at center, rgba(0,0,0,0) 35%, rgba(0,0,0,0.35) 70%),
+        linear-gradient(180deg, rgba(0,0,0,0.45), rgba(0,0,0,0.72));
+    pointer-events:none;
+    mix-blend-mode:multiply;
+}
+
+@keyframes cloudsMove{from{transform:translateX(0)}to{transform:translateX(-30%)}}
+@keyframes snitchFly{
+    0%{left:-10%;top:66%;transform:scale(0.95) rotate(0deg)}
+    18%{left:18%;top:44%;transform:scale(1.05) rotate(20deg)}
+    36%{left:44%;top:58%;transform:scale(0.95) rotate(-12deg)}
+    60%{left:72%;top:38%;transform:scale(1.07) rotate(28deg)}
+    88%{left:105%;top:52%;transform:scale(0.95) rotate(0deg)}
+    100%{left:120%;top:50%;transform:scale(0.95) rotate(0deg)}
+}
+
+@keyframes bludgerFly1{
+    0%{left:-8%;transform:translateY(0) scale(1)}
+    25%{left:26%;transform:translateY(-18px) scale(0.98)}
+    50%{left:58%;transform:translateY(6px) scale(1.02)}
+    75%{left:86%;transform:translateY(-12px) scale(0.98)}
+    100%{left:120%;transform:translateY(0) scale(1)}
+}
+
+@keyframes bludgerFly2{
+    0%{left:-12%;transform:translateY(0) scale(1)}
+    20%{left:12%;transform:translateY(-10px) scale(0.98)}
+    45%{left:42%;transform:translateY(8px) scale(1.03)}
+    70%{left:72%;transform:translateY(-8px) scale(0.98)}
+    100%{left:120%;transform:translateY(0) scale(1)}
+}
+
+@keyframes broomFly1{
+    0%{left:-28%;opacity:0}
+    6%{opacity:1}
+    40%{left:34%;opacity:1}
+    80%{left:88%;opacity:1}
+    100%{left:120%;opacity:0}
+}
+
+@keyframes broomFly2{
+    0%{left:-40%;opacity:0}
+    8%{opacity:1}
+    36%{left:18%;opacity:1}
+    72%{left:72%;opacity:1}
+    100%{left:120%;opacity:0}
+}
+
+/* Make hero text more Hogwarts-like */
+.logo-text.large{font-size:clamp(2.6rem,8vw,6rem);color:var(--gold);text-shadow:0 4px 18px rgba(0,0,0,0.7)}
+.tagline{color:var(--muted)}
+.main-nav .nav-links{
+    list-style:none;
+    display:flex;
+    gap:18px;
+    align-items:center;
+}
+.main-nav .nav-links a{
+    color:var(--text);
+    font-weight:500;
+    font-size:0.95rem;
+    padding:6px 8px;
+    border-radius:4px;
+    transition:background .18s, color .18s, transform .12s;
+}
+.main-nav .nav-links a:hover{
+    background:rgba(255,255,255,0.04);
+    color:var(--text);
+    transform:translateY(-1px);
+}
+.site-controls{display:flex;align-items:center;gap:12px}
+#theme-toggle{
+    background:transparent; /* sem fundo para combinar com o layout escuro */
+    color:var(--text); /* usa cor do texto atual */
+    border:1px solid rgba(255,255,255,0.06); /* borda sutil */
+    padding:8px 12px; /* espaçamento interno do botão */
+    border-radius:8px; /* cantos arredondados */
+    cursor:pointer; /* ponteiro de clique */
+    font-size:1.05rem; /* tamanho do ícone/emoji */
+}
+
+/* Responsive: em telas menores escondemos parte dos links e reduzimos logo */
+@media (max-width:720px){
+    .main-nav .nav-links{display:none}
+    .logo-text{font-size:1.2rem}
+    .site-header__inner{padding:0 8px}
+    /* Reduce complexity of animated background on small screens */
+    .stadium, .hoop, .bludger, .broom { display: none }
+    .snitch { top:64%; left:6%; animation-duration:8s }
+    /* Hide the heavy video background on small screens to save bandwidth */
+    #video-bg iframe, #video-bg video { display: none }
+}
+
+/* Tema claro: sobrescreve variáveis para um visual light */
+/* Usa o atributo data-theme no elemento root (<html>) */
+:root[data-theme='light'], [data-theme='light']{
+    --bg-1: #fafafa; /* fundo superior claro */
+    --bg-2: #ffffff; /* fundo inferior ainda mais claro */
+    --card: #e50914; /* mantemos o accent vermelho */
+    --text: #111111; /* texto escuro para contraste */
+    --muted: #4a4a4a; /* texto secundário escuro */
+    --focus-ring: rgba(14, 123, 255, 0.14); /* anel de foco azul suave no modo claro */
+}
+
+/* Ajustes visuais menores para modo claro */
+[data-theme='light'] #theme-toggle{
+    border:1px solid rgba(0,0,0,0.08); /* borda mais visível em claro */
+}
+
+[data-theme='light'] .profile img{
+    box-shadow: 0 6px 14px rgba(0,0,0,0.12); /* sombra mais suave em tema claro */
+}
+
+/* Mostrar o ícone do tema apenas via pseudo-elemento (sem texto visível) */
+#theme-toggle{
+    position:relative;
+    /* z-index não necessário, mas mantemos posicionamento para pseudo-elemento */
+}
+#theme-toggle::after{
+    content:'🌙'; /* ícone padrão (assumimos dark por default) */
+    display:inline-block;
+    font-size:1.05rem; /* tamanho visual do ícone */
+    line-height:1;
+    transition: transform .18s ease, opacity .18s ease;
+}
+/* Quando o root (<html>) tiver data-theme='light', usamos o ícone de sol */
+html[data-theme='light'] #theme-toggle::after{
+    content:'☀️';
+}
+html[data-theme='dark'] #theme-toggle::after{
+    content:'🌙';
+}
+
+/* Esconde qualquer texto visível interno do botão (a label permanece para leitores de tela) */
+#theme-toggle .visually-hidden{position:absolute!important;height:1px;width:1px;overflow:hidden;clip:rect(1px,1px,1px,1px);white-space:nowrap}
+
+/* End of file */
+
+/* Estilo padrão (Modo Escuro/Black) */
+body {
+    background-color: #141414;
+    color: white;
+    transition: background-color 0.5s ease; /* Efeito suave ao trocar */
+}
+
+/* Classe para o Modo Claro (Luz Acesa/Branco) */
+body.light-mode {
+    background-color: #ffffff;
+    color: #141414;
+}
+
+/* Ajuste para o texto dos links não sumir no branco */
+body.light-mode .nav-links a {
+    color: #141414;
+}

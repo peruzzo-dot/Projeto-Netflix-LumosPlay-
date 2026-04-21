@@ -1,0 +1,95 @@
+<!--
+  quidditch-bg.html
+
+  Usage:
+  - Replace VIDEO_ID with the YouTube video id of the official Quidditch clip you have rights to embed.
+  - To use this as the background of your existing `index.html`, you can:
+      1) include the contents of the <div id="video-bg"> into your page near the top of <body>,
+         or
+      2) load this file in an <iframe> or via server-side include.
+  Notes and legal: Do not embed copyrighted movie clips unless you have the right to do so. Embedding an
+  official YouTube upload is allowed by YouTube's embed rules when the uploader permits embedding, but you
+  must ensure you have the necessary rights to show the clip on your site.
+-->
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Quidditch background demo</title>
+  <style>
+    /* Full-window video background styles */
+    :root { --overlay-color: rgba(0,0,0,0.35); }
+    html,body{height:100%;margin:0}
+    body{font-family:Arial,sans-serif;background:#000;color:#fff}
+
+    /* Container that holds the iframe background */
+    #video-bg{
+      position:fixed;
+      inset:0; /* top/right/bottom/left = 0 */
+      z-index:-999; /* behind all page content */
+      overflow:hidden;
+      pointer-events:none; /* allow clicks through to the page */
+    }
+
+    /* The iframe is sized to cover the viewport while keeping correct aspect ratio */
+    #video-bg iframe{
+      position:absolute;
+      top:50%;
+      left:50%;
+      width:177.77vh; /* 16:9 ratio hack (9/16 = 0.5625 => 100/0.5625 = 177.77) */
+      height:100vh;
+      transform:translate(-50%,-50%);
+      border:0;
+      filter:grayscale(10%) contrast(0.95) brightness(0.9);
+    }
+
+    /* Fallback and overlay when video is not available or to darken the scene */
+    #video-bg .overlay{
+      position:absolute;inset:0;background:var(--overlay-color);pointer-events:none;
+    }
+
+    /* Example content to demonstrate the foreground remains interactive */
+    .demo-foreground{
+      position:relative;z-index:2;padding:48px;text-align:center;
+    }
+
+    /* Small screens: hide iframe (or you can provide a static image instead) */
+    @media (max-width:720px){
+      #video-bg iframe{display:none}
+      #video-bg .overlay{background:linear-gradient(180deg,rgba(0,0,0,0.6),rgba(0,0,0,0.6))}
+    }
+  </style>
+</head>
+<body>
+
+  <!--
+    Replace VIDEO_ID below with the actual YouTube video id you want to embed.
+    Example: if the URL is https://www.youtube.com/watch?v=abcd1234 then VIDEO_ID = abcd1234
+
+    Parameters explanation:
+    - autoplay=1 to attempt autoplay
+    - mute=1 because browsers often only allow autoplay if muted
+    -controls=0 hides player controls
+    -loop=1&playlist=VIDEO_ID loops the same video
+    -modestbranding=1 reduces YouTube logo prominence
+    -rel=0 prevents showing related videos from other channels in some cases
+  -->
+  <div id="video-bg" aria-hidden="true">
+    <iframe
+      src="https://www.youtube.com/embed/VIDEO_ID?autoplay=1&mute=1&controls=0&loop=1&playlist=VIDEO_ID&modestbranding=1&rel=0"
+      allow="autoplay; fullscreen; picture-in-picture"
+      allowfullscreen
+      title="Quidditch background video">
+    </iframe>
+    <div class="overlay"></div>
+  </div>
+
+  <main class="demo-foreground">
+    <h1>Quidditch background demo</h1>
+    <p>Replace <code>VIDEO_ID</code> in the iframe src with the official YouTube clip id you are allowed to embed.</p>
+    <p>The video is muted and looped to act as a background; browsers may block autoplay depending on settings.</p>
+  </main>
+
+</body>
+</html>

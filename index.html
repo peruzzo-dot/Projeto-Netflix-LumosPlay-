@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Netflix</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Fonte forte para o logotipo textual -->
+    <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="site-header" role="banner">
+        <div class="site-header__inner">
+            <div class="site-brand">
+                <a href="#" class="brand-link" aria-label="LumosPlay">
+                    <span class="logo-text">LumosPlay</span>
+                </a>
+            </div>
+
+            <!-- optional nav retained for larger screens -->
+            <nav class="main-nav" aria-label="Navegação principal">
+                <ul class="nav-links">
+                    <li><a href="#">Início</a></li>
+                    <li><a href="#">Séries</a></li>
+                    <li><a href="#">Filmes</a></li>
+                    <li><a href="#">Bombando</a></li>
+                    <li><a href="#">Minha lista</a></li>
+                </ul>
+            </nav>
+
+            <div class="site-controls">
+                <!-- small profile avatar (links to catalog as before) -->
+                <a href="catalogo/catalogo.html" class="profile-mini" title="Abrir perfil">
+                    <img src="assets/perfil-2.jpg" alt="Perfil" />
+                </a>
+
+                <!-- theme toggle kept for accessibility -->
+                <button id="theme-toggle" aria-label="Alternar tema">
+    <i class="fa-solid fa-moon"></i> </button>
+                </button>
+            </div>
+        </div>
+    </header>
+    <main>
+        <!-- Hero com logo textual estilo 'logotipo' -->
+        <div class="hero">
+            <div class="hero-bg" aria-hidden="true">
+                    <!-- Full-window YouTube background (replace VIDEO_ID below) -->
+                    <div id="video-bg" aria-hidden="true">
+                        <!-- Background video (MP4) - public sample clip (Big Buck Bunny) used as a working background.
+                             Replace the src with your chosen video URL if you prefer. -->
+                        <video id="bg-video" autoplay muted loop playsinline preload="auto" aria-hidden="true">
+                            <!-- Misty castle — Pexels: majestic castle above morning mist (more Hogwarts-like) -->
+                            <source src="https://videos.pexels.com/video-files/29392972/12660600_1920_1080_60fps.mp4" type="video/mp4">
+                            <!-- fallback text -->
+                        </video>
+                        <div class="overlay"></div>
+                    </div>
+
+                    <div class="clouds"></div>
+
+                    <!-- Quidditch scene: stadium silhouette, hoops, bludgers and broom riders -->
+                    <div class="stadium" aria-hidden="true"></div>
+
+                    <!-- Goal hoops (left and right) -->
+                    <div class="hoop hoop-left" aria-hidden="true"></div>
+                    <div class="hoop hoop-right" aria-hidden="true"></div>
+
+                    <!-- Flying elements: snitch (gold), bludgers (dark), broom riders (streaks) -->
+                    <div class="snitch" aria-hidden="true"></div>
+                    <div class="bludger bludger-1" aria-hidden="true"></div>
+                    <div class="bludger bludger-2" aria-hidden="true"></div>
+
+                    <div class="broom broom-1" aria-hidden="true"></div>
+                    <div class="broom broom-2" aria-hidden="true"></div>
+                </div>
+            <div class="hero-content">
+                <div class="logo-text large">LumosPlay</div>
+                <p class="tagline">Bem-vindo ao Mundo Bruxo — escolha seu perfil e comece a aventura.</p>
+            </div>
+        </div>
+
+        <h2 class="who-title">Quem está assistindo?</h2>
+        <section aria-label="Perfis disponíveis">
+            <ul class="profiles" role="list">
+                <li class="profiles__item">
+                    <a href="catalogo/catalogo.html" class="profile" data-genre="harrypotter">
+                        <figure>
+                            <img src="assets/perfil-1.jpg" alt="Ilustração de um personagem melancólico e pálido em estilo vitoriano sombrio, com estética de stop-motion e elementos distorcidos ao fundo.">
+                            <figcaption>Suspense</figcaption>
+                        </figure>
+                    </a>
+                </li>
+                <li class="profiles__item">
+                    <a href="catalogo/catalogo.html" class="profile" data-genre="harrypotter">
+                        <figure>
+                            <img src="assets/perfil-2.jpg" alt="Imagem de um boné azul">
+                            <figcaption>Comédia</figcaption>
+                        </figure>
+                    </a>
+                </li>
+                <li class="profiles__item">
+                    <a href="catalogo/catalogo.html" class="profile" data-genre="harrypotter">
+                        <figure>
+                            <img src="assets/perfil-3.jpg" alt="Imagem de um personagem com boné">
+                            <figcaption>Ação</figcaption>
+                        </figure>
+                    </a>
+                </li>
+                <li class="profiles__item">
+                    <a href="catalogo/catalogo.html" class="profile" data-genre="harrypotter">
+                        <figure>
+                            <img src="assets/perfil-4.jpg" alt="Imagem de um personagem com boné azul">
+                            <figcaption>Terror</figcaption>
+                        </figure>
+                    </a>
+                </li>
+            </ul>
+        </section>
+    </main>
+    <footer>
+    </footer>
+    <script src="js/index.js"></script>
+</body>
+</html>
