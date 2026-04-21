@@ -1,0 +1,624 @@
+:root {
+    --netflix-red: #E50914;
+    --dark-bg: #141414;
+    --text-color: #ffffff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background-color: var(--dark-bg);
+    color: var(--text-color);
+    overflow-x: hidden;
+}
+
+a {
+    text-decoration: none;
+    color: #e5e5e5;
+    transition: color 0.3s;
+}
+
+a:hover {
+    color: #b3b3b3;
+}
+
+/* Navbar */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 4%;
+    height: 70px;
+    z-index: 1000;
+    background-color: var(--dark-bg);
+}
+
+/* Featured hero styles */
+.featured{
+    position: relative;
+    width: 100%;
+    /* larger hero similar to Netflix: occupy most of viewport */
+    height: 72vh;
+    min-height: 520px;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+    color: #fff;
+    margin-bottom: 18px;
+}
+.featured-media{position:absolute;inset:0;z-index:0;overflow:hidden}
+#featured-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.featured-media iframe{position:absolute;inset:0;width:100%;height:100%;border:0;object-fit:cover}
+.featured-overlay{position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,0.25), rgba(0,0,0,0.7));mix-blend-mode:multiply}
+.featured-content{position:relative;z-index:2;padding:48px 6%;max-width:1400px;align-self:flex-end}
+.featured-title{font-size:clamp(2rem,4.6vw,4rem);margin:0 0 8px}
+.featured-sub{margin:0 0 18px;color:#ddd;font-size:1.05rem}
+.featured-actions .btn{margin-right:12px;padding:12px 20px;border-radius:6px;border:0;cursor:pointer}
+.btn-primary{background:var(--netflix-red);color:white}
+.btn-secondary{background:rgba(255,255,255,0.12);color:white}
+
+/* ensure sliders sit below the fixed navbar and hero spacing */
+.sliders-container{padding-top: 20px}
+
+/* Modal player styles */
+.player-modal{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:2000;visibility:hidden;opacity:0;pointer-events:none;transition:opacity .28s ease, visibility 0s linear .28s}
+.player-modal.open{visibility:visible;opacity:1;pointer-events:auto;transition-delay:0s}
+.player-backdrop{position:absolute;inset:0;background:rgba(0,0,0,0.75);backdrop-filter:blur(4px)}
+.player-content{position:relative;z-index:2;max-width:1200px;width:92%;background:transparent;border-radius:10px;box-shadow:0 20px 60px rgba(0,0,0,0.7);transform:translateY(8px);transition:transform .28s ease}
+.player-modal.open .player-content{transform:translateY(0)}
+.player-meta{position:relative;padding:18px 24px;color:#fff}
+.player-meta-inner{max-width:1100px;margin-bottom:8px}
+#player-title{font-size:1.6rem;margin:0 0 8px}
+#player-synopsis{margin:0 0 12px;color:#ddd;line-height:1.4}
+.player-meta-actions{display:flex;gap:8px}
+.player-container{position:relative;padding-top:56.25%;overflow:hidden;border-radius:8px;background:#000}
+.player-container iframe,.player-container video{position:absolute;top:0;left:0;width:100%;height:100%;border:0}
+.player-close{position:absolute;right:-6px;top:-6px;z-index:3;background:#111;color:#fff;border:0;width:40px;height:40px;border-radius:50%;cursor:pointer;font-size:18px;box-shadow:0 6px 18px rgba(0,0,0,0.6)}
+
+@media (max-width:720px){
+    .player-content{width:98%}
+    .featured{height:46vh;min-height:260px}
+}
+
+.navbar-left,
+.navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.logo {
+    width: 92px;
+    margin-right: 25px;
+    cursor: pointer;
+}
+
+/* textual brand for LumosPlay when using text logo */
+.logo-text{
+    font-family: 'Anton', 'Roboto', Arial, sans-serif;
+    font-weight:700;
+    font-size: 20px;
+    color: var(--netflix-red);
+    letter-spacing: -1px;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    font-size: 13px;
+}
+
+.nav-links .active {
+    font-weight: bold;
+    color: white;
+}
+
+.icon {
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.kids-link {
+    font-size: 14px;
+}
+
+.nav-notification {
+    position: relative;
+    cursor: pointer;
+}
+
+.notification-badge {
+    position: absolute;
+    top: -5px;
+    right: -8px;
+    background-color: var(--netflix-red);
+    color: white;
+    font-size: 10px;
+    font-weight: bold;
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile-menu {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.profile-icon {
+    width: 32px;
+    border-radius: 4px;
+}
+
+/* Left sidebar (vertical categories) */
+/* left sidebar removed */
+/* Row controls (arrows) */
+.slider-section{position:relative}
+.row-controls{position:absolute;inset:0;pointer-events:none}
+.row-prev,.row-next{
+    pointer-events:auto;
+    position:absolute;
+    top:50%;transform:translateY(-50%);
+    width:44px;height:64px;border-radius:6px;border:0;background:linear-gradient(90deg, rgba(0,0,0,0.4), rgba(0,0,0,0.1));color:#fff;font-size:28px;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .18s;
+}
+.row-prev{left:8px}
+.row-next{right:8px}
+.slider-section:hover .row-prev, .slider-section:hover .row-next{opacity:1}
+
+/* Ensure horizontal scrolling works like Netflix */
+.movie-row{overflow-x:auto;padding:10px 4% 50px 4%;}
+.movie-row::-webkit-scrollbar{height:8px}
+.movie-row::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.08);border-radius:4px}
+
+/* Sliders */
+.sliders-container {
+    padding: 0 4%;
+    padding-top: 100px;
+    /* Space for navbar */
+    position: relative;
+    z-index: 3;
+    padding-bottom: 100px;
+}
+
+@media (min-width: 1024px) {
+    /* no left sidebar present; keep default paddings */
+}
+
+.slider-section {
+    margin-bottom: 3.5vw;
+}
+
+.slider-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 12px;
+}
+
+.slider-title {
+    font-size: 1.25vw;
+    font-weight: bold;
+    color: #e5e5e5;
+    line-height: 1.25vw;
+}
+
+.slider-indicators {
+    display: flex;
+    gap: 2px;
+    margin-bottom: 4px;
+}
+
+.slider-indicators div {
+    width: 12px;
+    height: 2px;
+    background-color: #4d4d4d;
+}
+
+.slider-indicators div.active {
+    background-color: #aaa;
+}
+
+/* Barra de filtros de gêneros */
+.filter-bar{
+    display:flex;
+    gap:10px;
+    padding:12px 4%;
+    align-items:center;
+    margin-bottom:12px;
+}
+.filter-btn{
+    background: rgba(255,255,255,0.04);
+    color: #e5e5e5;
+    border: 1px solid rgba(255,255,255,0.06);
+    padding:8px 12px;
+    border-radius:20px;
+    cursor:pointer;
+    font-weight:600;
+}
+.filter-btn.active{
+    background: #e50914;
+    color: white;
+    border-color: #e50914;
+}
+.filter-btn:hover{transform: translateY(-2px)}
+
+.movie-row {
+    display: flex;
+    gap: 8px;
+    /* Small gap between movie cards */
+    overflow-x: visible;
+    /* Let the expanded cards paint outside this box vertically */
+    padding: 10px 4% 50px 4%;
+    /* Added bottom padding to hold the expanding modal */
+    margin: 0 -4%;
+    /* Pull edges back out so we don't double up padding from container */
+    scroll-behavior: smooth;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.movie-row::-webkit-scrollbar {
+    display: none;
+}
+
+.movie-card {
+    min-width: 250px;
+    width: 250px;
+    height: 140px;
+    background-color: #222;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s, border-radius 0.3s 0s, z-index 0s 0.3s, box-shadow 0.3s 0s;
+    position: relative;
+    z-index: 1;
+    transform-origin: center center;
+    /* Default origin */
+}
+
+/* Modifiers applied by JavaScript to prevent edge clipping */
+.movie-card.origin-left {
+    transform-origin: left center;
+}
+
+.movie-card.origin-right {
+    transform-origin: right center;
+}
+
+.movie-card:hover {
+    transform: scale(1.6) translateY(-5%);
+    /* Reduced vertical translation since container has more padding */
+    z-index: 99;
+    border-radius: 6px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.9);
+    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.6s, border-radius 0.3s 0.6s, box-shadow 0.3s 0.6s, z-index 0s 0s;
+}
+
+.movie-card img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 4px;
+    transition: opacity 0.3s ease, border-radius 0.3s;
+    z-index: 2;
+}
+
+.movie-card iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    border-radius: 4px;
+    transition: opacity 0.3s ease, border-radius 0.3s;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.movie-card iframe.playing {
+    opacity: 1;
+    z-index: 3;
+    border-radius: 6px 6px 0 0;
+}
+
+.movie-card:hover img {
+    border-radius: 6px 6px 0 0;
+    transition: border-radius 0s 0.6s;
+}
+
+.movie-card img.playing-video {
+    opacity: 0;
+}
+
+/* Card Details Modal */
+.card-details {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: #181818;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    padding: 18px 16px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s 0s, visibility 0.3s 0s;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.9);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    z-index: 2;
+    cursor: default;
+}
+
+.movie-card:hover .card-details {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.2s 0.6s, visibility 0s 0.6s;
+}
+
+.details-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.left-buttons,
+.right-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: #2b2b2b;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 14px;
+    transition: border-color 0.2s, background-color 0.2s;
+}
+
+.btn-icon:hover {
+    border-color: white;
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.btn-play-icon {
+    background-color: white;
+    color: black;
+    border: none;
+}
+
+.btn-play-icon:hover {
+    background-color: #e6e6e6;
+}
+
+.btn-play-icon i {
+    margin-left: 2px;
+}
+
+.details-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.match-score {
+    color: #46d369;
+}
+
+.age-badge {
+    background-color: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    color: white;
+    padding: 1px 3px;
+    border-radius: 2px;
+    font-family: Arial, sans-serif;
+}
+
+.age-badge.red-accent {
+    background-color: #d32f2f;
+    border: none;
+    font-weight: bold;
+}
+
+.resolution {
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    padding: 1px 3px;
+    border-radius: 2px;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.duration {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.details-tags {
+    display: flex;
+    gap: 6px;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.9);
+    margin-top: 4px;
+}
+
+.details-tags span:not(:last-child)::after {
+    content: "•";
+    color: #666;
+    margin-left: 6px;
+}
+
+/* Badges */
+.badge-top10 {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 22px;
+    height: 28px;
+    background-color: var(--netflix-red);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    z-index: 4;
+    border-bottom-left-radius: 2px;
+    box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.5);
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.badge-top10 span.top {
+    font-size: 7px;
+    letter-spacing: 0.5px;
+    line-height: 8px;
+}
+
+.badge-top10 span.number {
+    font-size: 13px;
+    line-height: 13px;
+}
+
+.badge-bottom {
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 2px 4px;
+    font-size: 10px;
+    font-weight: bold;
+    border-radius: 2px;
+    z-index: 4;
+    white-space: nowrap;
+    text-transform: uppercase;
+}
+
+.movie-card.has-progress .badge-bottom {
+    bottom: 12px;
+}
+
+.badge-bottom.red {
+    background-color: var(--netflix-red);
+    color: white;
+}
+
+.badge-bottom.white {
+    background-color: white;
+    color: black;
+}
+
+/* Progress bar */
+.progress-bar-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background-color: rgba(100, 100, 100, 0.7);
+    z-index: 5;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+.progress-value {
+    height: 100%;
+    background-color: var(--netflix-red);
+    border-bottom-left-radius: 4px;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+    }
+
+    /* left sidebar removed */
+
+    .movie-card {
+        min-width: 200px;
+        width: 200px;
+        height: 112px;
+    }
+
+    .slider-title {
+        font-size: 4vw;
+        line-height: 4.5vw;
+    }
+}
+
+/* Footer */
+footer {
+    padding: 0 4%;
+    color: #737373;
+    font-size: 13px;
+    margin-bottom: 20px;
+}
+
+.footer-content {
+    max-width: 980px;
+    margin: 0 auto;
+}
+
+.footer-content p {
+    margin-bottom: 30px;
+}
+
+/* Social icons in footer */
+.social-links{
+    display:flex;
+    gap:14px;
+    align-items:center;
+    margin-bottom:18px;
+}
+.social{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:40px;height:40px;border-radius:6px;background:transparent;color:#dcdcdc;font-size:18px;border:1px solid rgba(255,255,255,0.04);transition:all .18s ease;text-decoration:none
+}
+.social:hover{background:var(--netflix-red);color:#fff;transform:translateY(-2px);border-color:var(--netflix-red)}
+
+.footer-links {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 15px;
+}
+
+.footer-links a {
+    color: #737373;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .footer-links {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
